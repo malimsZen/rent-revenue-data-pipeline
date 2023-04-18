@@ -76,3 +76,4 @@ rent_period_end_date DATE NOT NULL,
 PRIMARY KEY (staging_id)
 );
 
+
