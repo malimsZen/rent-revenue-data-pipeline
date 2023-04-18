@@ -21,18 +21,27 @@ def generate_payment_data():
     return payment_data
 
 
-# create a function to validate the data
+# create a function to validate the data whether its in the right format and raise an error if not
 def validate_payment_data(payment_data):
     for payment in payment_data:
-        if payment["payment_amount"] < 1000:
-            return False
-        if payment["payment_amount"] > 10000:
-            return False
-        if payment["payment_date"] > payment["rent_period_end_date"]:
-            return False
-        if payment["payment_date"] < payment["rent_period_start_date"]:
-            return False
+        if not isinstance(payment["property_id"], int):
+            raise TypeError("property_id must be an integer")
+        if not isinstance(payment["tenant_id"], int):
+            raise TypeError("tenant_id must be an integer")
+        if not isinstance(payment["payment_amount"], float):
+            raise TypeError("payment_amount must be a float")
+        if not isinstance(payment["payment_date"], str):
+            raise TypeError("payment_date must be a string")
+        if not isinstance(payment["payment_method"], str):
+            raise TypeError("payment_method must be a string")
+        if not isinstance(payment["rent_period_start_date"], str):
+            raise TypeError("rent_period_start_date must be a string")
+        if not isinstance(payment["rent_period_end_date"], str):
+            raise TypeError("rent_period_end_date must be a string")
     return True
+
+
+
 
 
 # print the data
