@@ -1,35 +1,18 @@
-# import the data source module and create a validation function
-# create processing function to make sure the data is in the right format
+# import the data source module and run the validate_payment_data function
 
-# Path: data-processing-module.py
-# import the data source module and create a validation function
-# create processing function to make sure the data is in the right format
+# Path: data_processing_module.py
+import data_source_module as dsm
 
-import data_source_module
+# validate the data
 
-def validate_payment_data(payment_data):
-    for payment in payment_data:
-        if not isinstance(payment["property_id"], int):
-            raise TypeError("property_id must be an integer")
-        if not isinstance(payment["tenant_id"], int):
-            raise TypeError("tenant_id must be an integer")
-        if not isinstance(payment["payment_amount"], float):
-            raise TypeError("payment_amount must be a float")
-        if not isinstance(payment["payment_date"], str):
-            raise TypeError("payment_date must be a string")
-        if not isinstance(payment["payment_method"], str):
-            raise TypeError("payment_method must be a string")
-        if not isinstance(payment["rent_period_start_date"], str):
-            raise TypeError("rent_period_start_date must be a string")
-        if not isinstance(payment["rent_period_end_date"], str):
-            raise TypeError("rent_period_end_date must be a string")
-    return True
+# Path: data_processing_module.py
+#create a processing function that fixes the data that raises an error from the validate_payment_data function
 
-# create processing function to make sure the data is in the right format
+# Path: data_processing_module.py
 def process_payment_data(payment_data):
-    processed_payment_data = []
+    processed_data = []
     for payment in payment_data:
-        processed_payment_data.append({
+        processed_data.append({
             "property_id": payment["property_id"],
             "tenant_id": payment["tenant_id"],
             "payment_amount": payment["payment_amount"],
@@ -38,11 +21,14 @@ def process_payment_data(payment_data):
             "rent_period_start_date": payment["rent_period_start_date"],
             "rent_period_end_date": payment["rent_period_end_date"]
         })
-    return processed_payment_data
+    return processed_data
 
-# print the data
-print(data_source_module.generate_payment_data())
+# print the processed data
+print(process_payment_data(dsm.generate_payment_data()))
 
-# validate the data
-print(validate_payment_data(data_source_module.generate_payment_data()))
+# validate the processed data
+print(dsm.validate_payment_data(process_payment_data(dsm.generate_payment_data())))
+
+
+
 
