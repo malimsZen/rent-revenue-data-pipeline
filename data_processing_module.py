@@ -30,5 +30,3 @@ print(process_payment_data(dsm.generate_payment_data()))
 print(dsm.validate_payment_data(process_payment_data(dsm.generate_payment_data())))
 
 
-
-

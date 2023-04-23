@@ -2,10 +2,10 @@
     "sqltools.connections": [
         {
             "previewLimit": 50,
-            "server": "6.tcp.ngrok.io",
-            "port": 17307,
+            "server": "2.tcp.ngrok.io",
+            "port": 10387,
             "driver": "PostgreSQL",
-            "name": "Temp_cnnection",
+            "name": "temp_conn",
             "database": "postgres",
             "username": "malims"
         }

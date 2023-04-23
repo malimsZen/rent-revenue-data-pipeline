@@ -7,27 +7,33 @@ import csv
 
 # connect to the database
 conn = psycopg2.connect(
-    host="localhost",
+    host="2.tcp.ngrok.io",
     database="postgres",
     user="malims",
-    password="gn0pipm3t@mu",
-    port = 5432
+    password="gn0m3t@mu",
+    port = "10387"
 )
 
 # create a cursor
 cur = conn.cursor()
 
-# store the payment data into the staging table
-with open('payment_data.csv', 'r') as f:
-    reader = csv.reader(f)
-    next(reader) # Skip the header row.
+# store the payment data into the staging table in the database, generate unique id for each record using the uuid library and store the id in the stage_id column in the staging table
+import uuid
+with open('payment_data.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
     for row in reader:
-        cur.execute("INSERT INTO staging(property_id, tenant_id, payment_amount, payment_date, payment_method, rent_period_start_date, rent_period_end_date) VALUES (%s, %s, %s, %s, %s, %s, %s)", row)
+        stage_id = uuid.uuid4()
+        cur.execute("INSERT INTO staging (stage_id, property_id, tenant_id, payment_amount, payment_date, payment_method, rent_period_start_date, rent_period_end_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (stage_id, row['property_id'], row['tenant_id'], row['payment_amount'], row['payment_date'], row['payment_method'], row['rent_period_start_date'], row['rent_period_end_date']))
 
 # commit the changes
 conn.commit()
 
 # close the connection
 conn.close()
+
+
+
+
+
 
 

@@ -64,6 +64,7 @@ the staging table has the following attributes:
 (staging_id, property_id, tenant_id, payment_amount, payment_date, payment_method, rent_period_start_date,rent_period_end_date)
 */
 
+
 CREATE TABLE staging (
 staging_id INT NOT NULL,
 property_id INT NOT NULL,
@@ -77,3 +78,5 @@ PRIMARY KEY (staging_id)
 );
 
 
+/* drop table staging */
+DROP TABLE staging;
