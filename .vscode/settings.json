@@ -9,5 +9,11 @@
             "database": "postgres",
             "username": "malims"
         }
+    ],
+    "pylint.path": [
+        "/usr/local/bin/pylint"
+    ],
+    "pylint.interpreter": [
+        "/usr/local/bin/pylint"
     ]
 }
