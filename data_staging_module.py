@@ -7,11 +7,11 @@ import csv
 
 # connect to the database
 conn = psycopg2.connect(
-    host="2.tcp.ngrok.io",
+    host="localhost",
     database="postgres",
     user="malims",
     password="gn0m3t@mu",
-    port = "16745"
+    port = "5432"
 )
 
 # create a cursor
