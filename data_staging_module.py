@@ -23,7 +23,7 @@ with open('payment_data.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
         stage_id = uuid.uuid4()
-        cur.execute("INSERT INTO staging (staging_id, property_id, tenant_id, payment_amount, payment_date, payment_method, rent_period_start_date, rent_period_end_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (str(stage_id), row['property_id'], row['tenant_id'], row['payment_amount'], row['payment_date'], row['payment_method'], row['rent_period_start_date'], row['rent_period_end_date']))
+        cur.execute("INSERT INTO staging (stage_id, property_id, tenant_id, payment_amount, payment_date, payment_method, rent_period_start_date, rent_period_end_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (str(stage_id), row['property_id'], row['tenant_id'], row['payment_amount'], row['payment_date'], row['payment_method'], row['rent_period_start_date'], row['rent_period_end_date']))
 
 # commit the changes
 conn.commit()
