@@ -29,6 +29,11 @@ tenant_phone_number VARCHAR(50) NOT NULL,
 PRIMARY KEY (tenant_id)
 );
 
+--alter table rent_transaction and change rent_transaction_id to string data type
+ALTER TABLE rent_transaction
+ALTER COLUMN rent_transaction_id TYPE VARCHAR(50);
+
+
 CREATE TABLE rent_transaction (
 rent_transaction_id INT NOT NULL,
 property_id INT NOT NULL,
@@ -42,6 +47,15 @@ PRIMARY KEY (rent_transaction_id),
 FOREIGN KEY (property_id) REFERENCES property(property_id),
 FOREIGN KEY (tenant_id) REFERENCES tenant(tenant_id)
 );
+
+-- alter table time and create a unique primary key besides the payment_date column
+ALTER TABLE time
+ADD COLUMN time_id SERIAL PRIMARY KEY;
+
+-- Remove payment_date as the primary key
+ALTER TABLE time
+DROP CONSTRAINT time_pkey;
+
 
 CREATE TABLE time (
 payment_date DATE NOT NULL,
@@ -80,3 +94,7 @@ PRIMARY KEY (staging_id)
 
 /* drop table staging */
 DROP TABLE staging;
+
+-- select property_id 67 from table property 
+SELECT * FROM property
+WHERE property_id = 67;

@@ -1,6 +1,7 @@
 # validation checks
 
 import psycopg2
+import datetime
 
 def validate_staging_data():
     conn = psycopg2.connect(
@@ -84,3 +85,6 @@ def validate_staging_data():
     conn.close()
 
     return errors
+
+    print(errors)
+    
