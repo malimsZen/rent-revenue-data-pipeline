@@ -94,7 +94,3 @@ PRIMARY KEY (staging_id)
 
 /* drop table staging */
 DROP TABLE staging;
-
--- select property_id 67 from table property 
-SELECT * FROM property
-WHERE property_id = 67;
