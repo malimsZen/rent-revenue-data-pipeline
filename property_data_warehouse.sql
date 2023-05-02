@@ -94,3 +94,19 @@ PRIMARY KEY (staging_id)
 
 /* drop table staging */
 DROP TABLE staging;
+
+
+CREATE TABLE property_lookup (
+    property_id INT PRIMARY KEY,
+    property_name VARCHAR(50) NOT NULL,
+    property_address VARCHAR(50) NOT NULL,
+    property_type VARCHAR(50) NOT NULL,
+    number_of_units INT NOT NULL
+);
+
+CREATE TABLE tenant_lookup (
+    tenant_id INT PRIMARY KEY,
+    tenant_name VARCHAR(50) NOT NULL,
+    tenant_email VARCHAR(50) NOT NULL,
+    tenant_phone_number VARCHAR(50) NOT NULL
+);
