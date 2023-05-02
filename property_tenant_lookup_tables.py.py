@@ -8,7 +8,7 @@ conn = psycopg2.connect(
     host="localhost",
     database="postgres",
     user="malims",
-    password="gn0m3t@mu"
+    password="gn0m3t@mu",
 )
 
 # Create a cursor object to execute SQL queries
@@ -61,28 +61,31 @@ cur.execute("""
 
 # Update the tenant_lookup table with generated fake data for missing attributes
 cur.execute("""
-    UPDATE tenant_lookup
-    SET tenant_name = %(tenant_name)s,
-        tenant_email = %(tenant_email)s,
-        tenant_phone_number = %(tenant_phone_number)s
-    FROM (
-        SELECT DISTINCT tenant_id, 
-               %(tenant_name)s AS tenant_name, 
-               %(tenant_email)s AS tenant_email, 
-               %(tenant_phone_number)s AS tenant_phone_number
-        FROM staging
-    ) AS data
-    WHERE tenant_lookup.tenant_id = data.tenant_id;
-""",
-{
-    "tenant_name": fake.name(),
-    "tenant_email": fake.email(),
-    "tenant_phone_number": fake.phone_number()
-})
+    SELECT DISTINCT tenant_id
+    FROM staging;
+""")
+tenant_ids = cur.fetchall()
+
+for tenant_id in tenant_ids:
+    tenant_name = fake.unique.name()
+    tenant_email = fake.email()
+    tenant_phone_number = fake.phone_number()
+
+    cur.execute("""
+        UPDATE tenant_lookup
+        SET tenant_name = %(tenant_name)s,
+            tenant_email = %(tenant_email)s,
+            tenant_phone_number = %(tenant_phone_number)s
+        WHERE tenant_id = %(tenant_id)s;
+    """,
+    {
+        "tenant_name": tenant_name,
+        "tenant_email": tenant_email,
+        "tenant_phone_number": tenant_phone_number,
+        "tenant_id": tenant_id
+    })
 
 # Commit the changes and close the connection
 conn.commit()
 cur.close()
 conn.close()
-
-

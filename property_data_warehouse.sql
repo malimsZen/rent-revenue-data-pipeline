@@ -110,3 +110,10 @@ CREATE TABLE tenant_lookup (
     tenant_email VARCHAR(50) NOT NULL,
     tenant_phone_number VARCHAR(50) NOT NULL
 );
+
+
+-- Truncate the property_lookup table
+TRUNCATE TABLE property_lookup;
+
+-- Truncate the tenant_lookup table
+TRUNCATE TABLE tenant_lookup;
