@@ -1,14 +1,12 @@
-from faker import Faker
+import random
 import psycopg2
-
-fake = Faker()
 
 # Connect to the PostgreSQL database
 conn = psycopg2.connect(
     host="localhost",
     database="postgres",
     user="malims",
-    password="gn0m3t@mu",
+    password="gn0m3t@mu"
 )
 
 # Create a cursor object to execute SQL queries
@@ -53,10 +51,10 @@ cur.execute("""
     WHERE property_lookup.property_id = data.property_id;
 """,
 {
-    "property_name": fake.name(),
-    "property_address": fake.address().replace('\n', ', '),
-    "property_type": fake.random_element(elements=('Residential', 'Commercial', 'Industrial')),
-    "number_of_units": fake.random_int(min=1, max=10)
+    "property_name": random.choice(["Property A", "Property B", "Property C"]),
+    "property_address": "Unknown",
+    "property_type": random.choice(['Residential', 'Commercial', 'Industrial']),
+    "number_of_units": random.randint(1, 10)
 })
 
 # Update the tenant_lookup table with generated fake data for missing attributes
@@ -67,9 +65,9 @@ cur.execute("""
 tenant_ids = cur.fetchall()
 
 for tenant_id in tenant_ids:
-    tenant_name = fake.unique.name()
-    tenant_email = fake.email()
-    tenant_phone_number = fake.phone_number()
+    tenant_name = "Tenant " + str(tenant_id[0])
+    tenant_email = "tenant" + str(tenant_id[0]) + "@example.com"
+    tenant_phone_number = "555-555-5555"
 
     cur.execute("""
         UPDATE tenant_lookup
