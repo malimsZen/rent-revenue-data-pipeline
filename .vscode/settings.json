@@ -2,8 +2,8 @@
     "sqltools.connections": [
         {
             "previewLimit": 50,
-            "server": "2.tcp.ngrok.io",
-            "port": 16745,
+            "server": "8.tcp.ngrok.io",
+            "port": 19207,
             "driver": "PostgreSQL",
             "name": "temp_conn",
             "database": "postgres",
