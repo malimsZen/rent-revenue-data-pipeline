@@ -1,15 +1,5 @@
 {
-    "sqltools.connections": [
-        {
-            "previewLimit": 50,
-            "server": "2.tcp.ngrok.io",
-            "port": 16745,
-            "driver": "PostgreSQL",
-            "name": "temp_conn",
-            "database": "postgres",
-            "username": "malims"
-        }
-    ],
+    "sqltools.connections": [],
     "pylint.path": [
         "/usr/local/bin/pylint"
     ],

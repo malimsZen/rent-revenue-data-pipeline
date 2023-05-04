@@ -13,7 +13,7 @@ def generate_payment_data():
             "property_id": fake.random_int(min=1, max=100),
             "tenant_id": fake.random_int(min=1, max=1000),
             "payment_amount": round(random.uniform(1000, 10000), 2),
-            "payment_date": fake.date_between(start_date='-30d', end_date='today'),
+            "payment_date": fake.date_between(start_date='-1000d', end_date='today'),
             "payment_method": random.choice(banks),
             "rent_period_start_date": fake.date_between(start_date='-30d', end_date='today'),
             "rent_period_end_date": fake.date_between(start_date='today', end_date='+30d')
