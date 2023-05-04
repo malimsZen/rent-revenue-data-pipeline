@@ -86,4 +86,4 @@ for tenant_id in tenant_ids:
 # Commit the changes and close the connection
 conn.commit()
 cur.close()
-conn.close()
+conn.close()    
