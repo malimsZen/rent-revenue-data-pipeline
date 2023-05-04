@@ -4,70 +4,46 @@ import pandas as pd
 
 # Connect to the PostgreSQL database
 conn = psycopg2.connect(
-    host="8.tcp.ngrok.io",
+    host="localhost",
     database="postgres",
     user="malims",
     password="gn0m3t@mu",
-    port='19207'
+    port='5432'
 )
 
 # Create a cursor object to execute SQL queries
 cur = conn.cursor()
 
-# Generate and insert data into the property_lookup table
-cur.execute("""
-    INSERT INTO property_lookup (property_id, property_name, property_address, property_type, number_of_units)
-    SELECT DISTINCT property_id, 
-           'Unknown' AS property_name, 
-           'Unknown' AS property_address, 
-           'Unknown' AS property_type, 
-           0 AS number_of_units
-    FROM staging;
-""")
-
-# Create a dataframe from the property_lookup table and populate the missing attributes, property_id should be extracted from staging table in the database
-df = pd.read_sql_query("""
-   SELECT DISTINCT property_id,
-         'Unknown' AS property_name,
-        'Unknown' AS property_address,
-       'Unknown' AS property_type,
-      0 AS number_of_units
- FROM staging;
-""", conn)
-df['property_name'] = random.choice(["Tsavo Divine", "Tsavo Rising", "Tsavo Stanley", "Sunset 2","Royal Suburbs","90 Degrees","Coral Bells"])
-df['property_address'] = "Unknown"
-df['property_type'] = random.choice(['Residential', 'Commercial', 'Industrial'])
-df['number_of_units'] = random.randint(1, 10)
-df.to_sql('property_lookup', conn, if_exists='replace', index=False)
+# create a lookup table for property using a dataframe (property_id, property_name, property_address,property_type,num_of_units). 
+# Use property_id from staging table as primary key and randomize the rest of the columns
+#select the    property_id from the staging table
+cur.execute("SELECT property_id FROM staging")
+property_id = cur.fetchall()
 
 
-# Update the tenant_lookup table with generated fake data for missing attributes
-cur.execute("""
-    SELECT DISTINCT tenant_id
-    FROM staging;
-""")
-tenant_ids = cur.fetchall()
+property_id = [i for i in range(property_id)]
+property_name = [f"property_{i}" for i in range(1, 1001)]
+property_address = [f"address_{i}" for i in range(1, 1001)]
+property_type = [random.choice(['apartment', 'condo', 'house']) for i in range(1, 1001)]
+num_of_units = [random.randint(1, 10) for i in range(1, 1001)]
 
-for tenant_id in tenant_ids:
-    tenant_name = "Tenant " + str(tenant_id[0])
-    tenant_email = "tenant" + str(tenant_id[0]) + "@example.com"
-    tenant_phone_number = "555-555-5555"
+property_df = pd.DataFrame({
+    'property_id': property_id,
+    'property_name': property_name,
+    'property_address': property_address,
+    'property_type': property_type,
+    'num_of_units': num_of_units
+})
 
-    cur.execute("""
-        UPDATE tenant_lookup
-        SET tenant_name = %(tenant_name)s,
-            tenant_email = %(tenant_email)s,
-            tenant_phone_number = %(tenant_phone_number)s
-        WHERE tenant_id = %(tenant_id)s;
-    """,
-    {
-        "tenant_name": tenant_name,
-        "tenant_email": tenant_email,
-        "tenant_phone_number": tenant_phone_number,
-        "tenant_id": tenant_id
-    })
+# Export property lookup table
+property_df.to_csv('property.csv', index=False)
 
-# Commit the changes and close the connection
-conn.commit()
-cur.close()
-conn.close()    
+# create a lookup table for tenant using a dataframe (tenant_id, tenant_name, tenant_phone,tenant_email,tenant_address).
+# Use tenant_id from staging table as primary key and randomize the rest of the columns respecting column data types
+#select the    tenant_id from the staging table
+cur.execute("SELECT tenant_id FROM staging")
+tenant_id = cur.fetchall()
+
+tenant_id = [i for i in range(tenant_id)]
+tenant_name = [f"tenant_{i}" for i in range(1, 1001)]
+tenant_phone = [random.randint(1000000000, 9999999999) for i in range(1, 1001)]
