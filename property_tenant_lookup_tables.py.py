@@ -51,7 +51,7 @@ cur.execute("""
     WHERE property_lookup.property_id = data.property_id;
 """,
 {
-    "property_name": random.choice(["Property A", "Property B", "Property C"]),
+    "property_name": random.choice(["Tsavo Divine", "Tsavo Rising", "Tsavo Stanley", "Sunset 2","Royal Suburbs","90 Degrees","Coral Bells"]),
     "property_address": "Unknown",
     "property_type": random.choice(['Residential', 'Commercial', 'Industrial']),
     "number_of_units": random.randint(1, 10)
