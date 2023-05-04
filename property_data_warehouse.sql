@@ -35,7 +35,7 @@ ALTER COLUMN rent_transaction_id TYPE VARCHAR(50);
 
 
 CREATE TABLE rent_transaction (
-rent_transaction_id INT NOT NULL,
+rent_transaction_id VARCHAR(50) NOT NULL,
 property_id INT NOT NULL,
 tenant_id INT NOT NULL,
 payment_amount DECIMAL(10,2) NOT NULL,
@@ -44,7 +44,7 @@ payment_method VARCHAR(50) NOT NULL,
 rent_period_start_date DATE NOT NULL,
 rent_period_end_date DATE NOT NULL,
 PRIMARY KEY (rent_transaction_id),
-FOREIGN KEY (property_id) REFERENCES property(property_id),
+FOREIGN KEY (property_id) REFERENCES property(property_id) ,
 FOREIGN KEY (tenant_id) REFERENCES tenant(tenant_id)
 );
 
@@ -55,6 +55,7 @@ ADD COLUMN time_id SERIAL PRIMARY KEY;
 -- Remove payment_date as the primary key
 ALTER TABLE time
 DROP CONSTRAINT time_pkey;
+
 
 
 CREATE TABLE time (
@@ -90,6 +91,9 @@ rent_period_start_date DATE NOT NULL,/*  */
 rent_period_end_date DATE NOT NULL,
 PRIMARY KEY (staging_id)
 );
+-- alter staging_id data type from int to varchar(50)
+ALTER TABLE staging
+ALTER COLUMN staging_id TYPE VARCHAR(50);
 
 
 /* drop table staging */
@@ -112,8 +116,5 @@ CREATE TABLE tenant_lookup (
 );
 
 
--- Truncate the property_lookup table
-TRUNCATE TABLE property_lookup;
 
--- Truncate the tenant_lookup table
-TRUNCATE TABLE tenant_lookup;
+
