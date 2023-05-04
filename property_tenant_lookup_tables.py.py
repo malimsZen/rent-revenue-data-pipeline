@@ -3,7 +3,7 @@ import psycopg2
 
 # Connect to the PostgreSQL database
 conn = psycopg2.connect(
-    host="localhost",
+    host="localhostr",
     database="postgres",
     user="malims",
     password="gn0m3t@mu"
