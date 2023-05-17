@@ -34,5 +34,3 @@ with open('payment_data.csv', 'w', newline='') as csvfile:
 
 
 
-
-
