@@ -38,3 +38,7 @@ for property_id in property_ids:
 property_df.to_sql('property_lookup', engine, if_exists='append', index=False)
 tenant_df.to_sql('tenant_lookup', engine, if_exists='append', index=False)
 
+print("Property and tenant lookup tables populated successfully.")
+
+
+
