@@ -21,3 +21,4 @@ USER appuser
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 CMD ["python", "rent-revenue-data-pipeline/data_source_module.py"]
+
